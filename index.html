@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>WDDL</title>
+
+        <!-- Replace your server icon by uploading an image file named "list_icon.png"-->
+        <link rel="icon" href="/list_icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Unbounded:wght@600;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="/css/typography.css" />
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+        <link rel="stylesheet" type="text/css" href="/css/pages/list.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/css/pages/leaderboard.css"
+        />
+        <link rel="stylesheet" type="text/css" href="/css/components/nav.css" />
+        <link rel="stylesheet" type="text/css" href="/css/components/btn.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/css/components/tabs.css"
+        />
+        <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
+        <script type="module" src="/js/main.js"></script>
+    </head>
+    <body id="app">
+        <header class="rail" :class="{ dark: store.dark }">
+            <router-link class="brand" to="/">
+                <span class="brand__mark">WDDL</span>
+                <span class="brand__sub">Wave Dashers Demon List</span>
+            </router-link>
+            <nav class="nav">
+                <router-link class="nav__tab" to="/">
+                    <span class="type-label-lg">List</span>
+                </router-link>
+                <router-link class="nav__tab" to="/leaderboard">
+                    <span class="type-label-lg">Leaderboard</span>
+                </router-link>
+            </nav>
+            <div class="nav__actions">
+                <button
+                    class="nav__icon"
+                    aria-label="Toggle dark mode"
+                    @click.prevent="store.toggleDark()"
+                >
+                    <img
+                        :src="store.dark ? '/assets/light.svg' : '/assets/dark.svg'"
+                        alt=""
+                    />
+                </button>
+                <!-- Submit Record opens a Gmail compose window addressed to the list email -->
+                <a
+                    class="nav__cta type-label-lg"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=notnotmarsh99@gmail.com&su=WDDL%20Record%20Submission"
+                    target="_blank"
+                    rel="noopener"
+                    >Submit record</a
+                >
+            </div>
+        </header>
+        <router-view :class="{ dark: store.dark }"></router-view>
+    </body>
+</html>
