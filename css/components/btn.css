@@ -1,0 +1,14 @@
+.btn {
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0.9rem 1.4rem;
+    margin: 0;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

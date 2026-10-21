@@ -1,0 +1,241 @@
+/* Shared by the list and leaderboard pages: a stage on the left, a ranking on the right */
+main.page-list,
+main.page-leaderboard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 26rem;
+    align-items: start;
+}
+
+.stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    max-width: 60rem;
+    padding: 2.5rem 2.5rem 4rem;
+    scroll-margin-top: 6rem;
+}
+.stage__head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+.stage__rank {
+    padding: 0.6rem 1.4rem 0.7rem 1.1rem;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+.stage .video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    clip-path: polygon(0 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%);
+}
+.stage .empty {
+    padding: 1.25rem 0;
+}
+
+.level-authors {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: max-content;
+    gap: 0.35rem 1.5rem;
+    align-items: baseline;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.5rem;
+}
+.stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid color-mix(in srgb, var(--color-on-background) 30%, transparent);
+}
+.stats li p {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.3;
+}
+
+.records-block,
+.score-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+.records,
+.table {
+    width: 100%;
+}
+.records tr,
+.table tr {
+    border-bottom: 1px solid color-mix(in srgb, var(--color-on-background) 14%, transparent);
+}
+.records td,
+.table td {
+    padding: 0.7rem 0;
+    vertical-align: middle;
+}
+.records tr td:not(:last-child),
+.table tr td:not(:last-child) {
+    padding-right: 1.25rem;
+}
+.records .percent p,
+.table .rank p {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+.records .user,
+.table .level {
+    width: 100%;
+}
+.records .hz,
+.table .score {
+    text-align: end;
+    white-space: nowrap;
+}
+.records a:hover,
+.table a:hover,
+.staff a:hover {
+    text-decoration: underline;
+}
+.records .mobile img {
+    height: 1.25rem;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.error {
+    padding: 0.9rem 1.1rem;
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+}
+
+.staff-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-on-background) 14%, transparent);
+}
+.staff {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.staff li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.1rem 0.55rem 0.8rem;
+    background-color: var(--color-background-hover);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.staff li img {
+    height: 1.2rem;
+}
+
+/* The ranking */
+.ladder {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    padding: 1.5rem 1.5rem 1.5rem 0.5rem;
+}
+.ladder ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.tile {
+    display: grid;
+    grid-template-columns: 3.8rem 6.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 0.8rem;
+    border: none;
+    margin: 0;
+    text-align: start;
+    cursor: pointer;
+    font: inherit;
+    color: var(--color-on-background);
+    background-color: var(--color-background-hover);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+    transition: background-color 120ms ease;
+}
+.tile:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-on-background) 14%, var(--color-background));
+}
+.tile.active {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+.tile.error {
+    color: var(--color-error);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+.tile__rank {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: -0.03em;
+}
+.tile__rank--legacy {
+    font-size: 0.6rem;
+}
+.tile__thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background-color: color-mix(in srgb, var(--color-on-background) 18%, transparent);
+}
+.tile__name {
+    font-weight: 700;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+.tile--player {
+    grid-template-columns: 3.8rem minmax(0, 1fr) auto;
+}
+.tile__score {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+@media screen and (max-width: 1099px) {
+    main.page-list,
+    main.page-leaderboard {
+        display: block;
+    }
+    .stage {
+        max-width: none;
+        padding: 1.5rem 1.25rem 2rem;
+    }
+    .ladder {
+        position: static;
+        height: auto;
+        overflow: visible;
+        padding: 0 1.25rem 2.5rem;
+    }
+}
