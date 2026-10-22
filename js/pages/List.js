@@ -38,19 +38,17 @@ export default {
                             <p>{{ score(selected + 1, 100, level.percentToQualify) }}</p>
                         </li>
                         <li>
-                            <div class="type-title-sm">ID</div>
-                            <p>{{ level.id }}</p>
-                        </li>
-                        <li>
-                            <div class="type-title-sm">Password</div>
-                            <p>{{ level.password || 'Free to Copy' }}</p>
+                            <div class="type-title-sm">Code</div>
+                            <button class="copy" :class="{ copied }" title="Click to copy the level code" @click="copyCode">
+                                <span class="copy__id">{{ level.id }}</span>
+                                <span class="copy__done" aria-hidden="true">&#10003; Copied</span>
+                            </button>
+                            <span class="sr-only" aria-live="polite">{{ copied ? 'Level code copied' : '' }}</span>
                         </li>
                     </ul>
                     <div class="records-block">
                         <h2>Records</h2>
-                        <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
-                        <p v-else-if="selected + 1 <= 150"><strong>100%</strong> or better to qualify</p>
-                        <p v-else>This level does not accept new records.</p>
+                        <p v-if="selected + 1 > 150">This level does not accept new records.</p>
                         <table class="records">
                             <tr v-for="record in level.records" class="record">
                                 <td class="percent">
@@ -100,6 +98,7 @@ export default {
         editors: [],
         loading: true,
         selected: 0,
+        copied: false,
         errors: [],
         roleIconMap,
         store
@@ -121,6 +120,11 @@ export default {
                     ? this.level.showcase
                     : this.level.verification
             );
+        },
+    },
+    watch: {
+        selected() {
+            this.copied = false;
         },
     },
     async mounted() {
@@ -160,6 +164,29 @@ export default {
             }
             const id = getYoutubeIdFromUrl(lvl.verification);
             return id ? getThumbnailFromId(id) : "";
+        },
+        async copyCode() {
+            const text = String(this.level.id);
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch {
+                // Fallback for browsers that block the clipboard API
+                const box = document.createElement("textarea");
+                box.value = text;
+                box.style.position = "fixed";
+                box.style.opacity = "0";
+                document.body.appendChild(box);
+                box.select();
+                try {
+                    document.execCommand("copy");
+                } catch {}
+                box.remove();
+            }
+            this.copied = true;
+            clearTimeout(this.copyTimer);
+            this.copyTimer = setTimeout(() => {
+                this.copied = false;
+            }, 1800);
         },
         pick(i) {
             this.selected = i;
